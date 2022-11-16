@@ -10,6 +10,10 @@ def account_check(accounts_numbers, number):
             return n
 tmp = account_check(account_numbers, nu)
 acc = account_numbers[tmp] '''
+def account_num_checking(accounts, number):
+    for n in range(len(accounts)):
+            if accounts[n].accountNumber == number:
+                return n
 
 class Program:
     def run(self):
@@ -38,7 +42,13 @@ class Bank:
     def openAccount(self):
         pass
     def searchAccount(self):
-        pass
+        attempt = int(input("Enter the account number: "))
+        result = account_num_checking(accounts, attempt)
+        if result == None:
+            print("Wrong number")
+        else:
+            print(accounts[result].accountHoldName)
+            
 
 class Account:
     def __init__(self, number, name, rate, balance):
@@ -71,13 +81,19 @@ class SavingsAccount:
     def withdraw(self):
         pass
 
-'''user = Program()
-user.run()
-a = accounts[0]
-print(a[0])
-'''
+
+'''a = accounts[0]
+print(a[0])'''
+
 user1 = Account(100, 'John', 0, 2350.25)
 user2 = Account(200, 'Mike', 0, 1934.40)
 user3 = Account(300, 'Richard', 0, 65983.21)
 user4 = Account(400, 'Andrew', 0, 15.90)
 user5 = Account(500, 'Jason', 0, 159693.01)
+accounts = [user1, user2, user3, user4, user5]
+
+
+
+
+user = Program()
+user.run()
