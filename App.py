@@ -33,8 +33,26 @@ class Program:
             quit()
         else:
             print("Wrong")
-    def showAccountMenu(self):
-        pass
+    def showAccountMenu(self, account):
+        print("Holder's name: ", account.getAccountHoldName())
+        print("Holder's account number: ", account.getAccountNumber())
+        print("What do you want to do?")
+        print("[1] Check balance") 
+        print("[2] Deposit money") 
+        print("[3] Withdraw money") 
+        print("[4] Exit")
+        attempt = int(input("Enter the number: "))
+        if attempt == 1:
+            print(account.getCurrentBalance())
+        elif attempt == 2:
+            pass
+        elif attempt == 3:
+            pass
+        elif attempt == 4:
+            pass
+        else:
+            print("Wrong")
+
 
 class Bank:
     def __init__(self):
@@ -47,8 +65,10 @@ class Bank:
         if result == None:
             print("Wrong number")
         else:
-            print(accounts[result].accountHoldName)
-            
+            user_account = accounts[result]
+            account_menu = Program()
+            account_menu.showAccountMenu(user_account)
+
 
 class Account:
     def __init__(self, number, name, rate, balance):
