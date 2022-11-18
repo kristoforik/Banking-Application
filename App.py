@@ -70,7 +70,8 @@ class Program:
         print("[1] Check balance") 
         print("[2] Deposit money") 
         print("[3] Withdraw money") 
-        print("[4] Exit")
+        print("[4] Exit to main menu")
+        print("[5] Exit the application")
         attempt = int(input("Enter the number: "))
         if attempt == 1:
             print(account.getCurrentBalance())
@@ -78,11 +79,11 @@ class Program:
             print("[1] Exit to account menu")
             print("[2] Exit to main menu")
             print("[3] Exit the application")
-            choice = input("Enter the number: ")
+            choice = int(input("Enter the number: "))
             if choice == 1:
                 self.showAccountMenu(account)
             elif choice == 2:
-                self.showMainMenu(account)
+                self.showMainMenu()
             elif choice == 3:
                 quit()
         elif attempt == 2:
@@ -95,9 +96,14 @@ class Program:
             time.sleep(0.5)
             self.showAccountMenu(account)
         elif attempt == 3:
-            pass
+            print("You withdrawed")
         elif attempt == 4:
-            pass
+            time.sleep(0.5)
+            self.showMainMenu(account)
+        elif attempt == 5:
+            time.sleep(0.5)
+            print("You left the application")
+            quit()
         else:
             print("Wrong")
         return account
@@ -111,9 +117,10 @@ class Bank:
         user5 = Account(500, 'Jason', 0, 159693.01)
         self.bankName = 'CIBC'
         self.account_list = [user1, user2, user3, user4, user5]
-    def openAccount(self, account):
-        tmp = account
+    def openAccount(self):
+        tmp = creating_account()
         self.account_list.append(tmp)
+        print(self.account_list[-1].accountHoldName)
         return self.account_list
     def searchAccount(self):
         attempt = int(input("Enter the account number: "))
@@ -146,18 +153,24 @@ class Account:
         pass
 
 class SavingsAccount(Account):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, number, name, rate, balance):
+        super().__init__(number, name, rate, balance)
         self.minimumBalance = 0
     def withdraw(self):
         pass
     
 class SavingsAccount(Account):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, number, name, rate, balance):
+        super().__init__(number, name, rate, balance)
         self.overdraftAllowed = 0
     def withdraw(self):
         pass
+
+class CreditScore(Account):
+    def __init__(self, number, name, rate, balance):
+        super().__init__(number, name, rate, balance)
+        self.credit_score = 0
+
 
 
 
