@@ -21,6 +21,13 @@ def check_name(name):
         chname = input("Enter a valid name: ")
     return chname
 
+def check_onetwo(number):
+    tnumber = str(number)
+    cnumber = tnumber
+    while cnumber.isnumeric() == False and cnumber == '1' or cnumber == '2':
+        cnumber = (input("Enter a valid number: "))
+    return cnumber
+
 def check_number(number):
     tnumber = str(number)
     cnumber = tnumber
@@ -35,7 +42,7 @@ def check_amount(amount):
             float(camount)
             return camount
         except ValueError:
-            camount = input("Enter a valid product price: ")
+            camount = input("Enter a valid amount: ")
 
 def creating_account():
     number = input("Enter the number for your account: ")
@@ -78,8 +85,9 @@ class Program:
         print("[1] Check balance") 
         print("[2] Deposit money") 
         print("[3] Withdraw money") 
-        print("[4] Exit to main menu")
-        print("[5] Exit the application")
+        print("[4] Exit to account menu")
+        print("[5] Exit to main menu")
+        print("[6] Exit the application")
         attempt = int(input("Enter the number: "))
         if attempt == 1:
             time.sleep(0.2)
@@ -97,23 +105,31 @@ class Program:
             time.sleep(0.5)
             self.showCheqAccountMenu(account, account_list)
         elif attempt == 3:
-            print("You withdrawed")
+            amount = input("Enter the number to withdraw: ")
+            amount = float(check_amount(amount))
+            account.cheqaccount.withdraw(amount)
+            time.sleep(0.5)
+            self.showCheqAccountMenu(account, account_list)
         elif attempt == 4:
             time.sleep(0.5)
-            self.showMainMenu(account_list)
+            self.showAccountMenu(account, account_list)
         elif attempt == 5:
+            time.sleep(0.5)
+            self.showMainMenu(account_list)
+        elif attempt == 6:
             time.sleep(0.5)
             print("You left the application")
             quit()
         else:
-            print("Wrong")    
+            print("Wrong")  
     def showSavAccountMenu(self, account, account_list):
         print("What do you want to do?")
         print("[1] Check balance") 
         print("[2] Deposit money") 
         print("[3] Withdraw money") 
-        print("[4] Exit to main menu")
-        print("[5] Exit the application")
+        print("[4] Exit to account menu")
+        print("[5] Exit to menu menu")
+        print("[6] Exit the application")
         attempt = int(input("Enter the number: "))
         if attempt == 1:
             time.sleep(0.2)
@@ -131,16 +147,23 @@ class Program:
             time.sleep(0.5)
             self.showSavAccountMenu(account, account_list)
         elif attempt == 3:
-            print("You withdrawed")
+            amount = input("Enter the number to withdraw: ")
+            amount = float(check_amount(amount))
+            account.savaccount.withdraw(amount)
+            time.sleep(0.5)
+            self.showSavAccountMenu(account, account_list)
         elif attempt == 4:
             time.sleep(0.5)
-            self.showMainMenu(account_list)
+            self.showAccountMenu(account, account_list)
         elif attempt == 5:
+            time.sleep(0.5)
+            self.showMainMenu(account_list)
+        elif attempt == 6:
             time.sleep(0.5)
             print("You left the application")
             quit()
         else:
-            print("Wrong")
+            print("Wrong") 
 
 class Bank:
     def __init__(self):
@@ -188,10 +211,16 @@ class SavingsAccount():
     def __init__(self, sbalance, minbalance):
         self.balance = sbalance
         self.minimumBalance = minbalance
-    def withdraw(self):
-        pass
     def getCurrentBalance(self):
         return self.balance
+    def withdraw(self, amount):
+        if self.balance - amount <= self.minimumBalance:
+            print("Unfortunatelly, you cannot withdraw this amount because of the required minimum balance")
+            return self.balance
+        else:
+            self.balance -= amount
+            print("Money successfully withdrawn")
+            return self.balance
     def deposit(self, amount):
         self.balance = self.balance + amount
         return self.balance
@@ -200,10 +229,16 @@ class ChequingAccount():
     def __init__(self, cbalance, overdraft):
         self.balance = cbalance
         self.overdraftAllowed = overdraft
-    def withdraw(self):
-        pass
     def getCurrentBalance(self):
         return self.balance
+    def withdraw(self, amount):
+        if self.balance - amount >= -self.overdraftAllowed:
+            self.balance -= amount
+            print("Money successfully withdrawn")
+            return self.balance
+        else:
+            print("Unfortunatelly, you cannot withdraw this amount as you exceed your overdraft limit")
+            return self.balance
     def deposit(self, amount):
         self.balance = self.balance + amount
         return self.balance
