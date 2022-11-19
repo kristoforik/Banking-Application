@@ -21,11 +21,22 @@ def check_name(name):
         chname = input("Enter a valid name: ")
     return chname
 
+def check_onetwothree(number):
+    cnumber = str(number)
+    while cnumber != '1' and cnumber != '2' and cnumber != '3':
+        cnumber = input("Enter a valid number: ")
+    return cnumber
+
 def check_onetwo(number):
-    tnumber = str(number)
-    cnumber = tnumber
-    while cnumber.isnumeric() == False and cnumber == '1' or cnumber == '2':
-        cnumber = (input("Enter a valid number: "))
+    cnumber = str(number)
+    while cnumber != '1' and cnumber != '2':
+        cnumber = input("Enter a valid number: ")
+    return cnumber
+
+def check_onetosix(number):
+    cnumber = str(number)
+    while cnumber != '1' and cnumber != '2' and cnumber != '3' and cnumber != '4' and cnumber != '5' and cnumber != '6':
+        cnumber = input("Enter a valid number: ")
     return cnumber
 
 def check_number(number):
@@ -59,14 +70,18 @@ class Program:
         print("[2] Select an account")
         print("[3] Exit the application")
         choice = (input("Enter the number: "))
-        choice = int(check_number(choice))
+        choice = int(check_onetwothree(choice))
         if choice == 1:
+            time.sleep(0.5)
             newAcc = Bank()
             newAcc.openAccount(account_list)
         elif choice == 2:
+            time.sleep(0.5)
             selAcc = Bank()
             selAcc.searchAccount(account_list)
         elif choice == 3:
+            time.sleep(0.5)
+            print("You left the application")
             quit()
         else:
             print("Wrong")
@@ -75,7 +90,8 @@ class Program:
         print("Holder's account number: ", account.getAccountNumber())
         print("Which account do you want to access?")
         print("[1] Checking account [2] Savings account")
-        choice = int(input("Enter the number: "))
+        choice = (input("Enter the number: "))
+        choice = int(check_onetwo(choice))
         if choice == 1:
             self.showCheqAccountMenu(account, account_list)
         elif choice == 2:
@@ -88,7 +104,8 @@ class Program:
         print("[4] Exit to account menu")
         print("[5] Exit to main menu")
         print("[6] Exit the application")
-        attempt = int(input("Enter the number: "))
+        attempt = (input("Enter the number: "))
+        attempt = int(check_onetosix(attempt))
         if attempt == 1:
             time.sleep(0.2)
             print(account.cheqaccount.getCurrentBalance())
@@ -130,7 +147,8 @@ class Program:
         print("[4] Exit to account menu")
         print("[5] Exit to menu menu")
         print("[6] Exit the application")
-        attempt = int(input("Enter the number: "))
+        attempt = (input("Enter the number: "))
+        attempt = int(check_onetosix(attempt))
         if attempt == 1:
             time.sleep(0.2)
             print(account.savaccount.getCurrentBalance())
@@ -175,14 +193,17 @@ class Bank:
         #print(account_list)
         program.showMainMenu(account_list)
     def searchAccount(self, account_list):
+        menu = Program()
         attempt = int(input("Enter the account number: "))
         result = account_num_checking(account_list, attempt)
         if result == None:
-            print("Wrong number")
+            time.sleep(0.5)
+            print("There is no account with such number")
+            time.sleep(0.5)
+            menu.showMainMenu(account_list)
         else:
             user_account = account_list[result]
-            account_menu = Program()
-            account_menu.showAccountMenu(user_account, account_list)
+            menu.showAccountMenu(user_account, account_list)
 
 class Account:
     def __init__(self, number, name, rate, sbalance, minbalance, cbalance, overdraft):
