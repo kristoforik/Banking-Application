@@ -11,6 +11,13 @@ def account_num_checking(accounts, number):
             if accounts[n].accountNumber == number:
                 return n
 
+def check_negative(number):
+    num = float(number)
+    if num <= 0:
+        num = input("Negative value cannot be processed. Enter the new value: ")
+        num = check_amount(num)
+    return num
+
 def check_name(name):
     chname = str(name)
     while chname.isalpha() == False:
@@ -21,7 +28,7 @@ def check_inlist(alist, number):
     num = int(check_number(number))
     for i in alist:
         if str(num) == str(i.accountNumber):
-            num = input("The number is busy: ")
+            num = input("The number is not available. Enter the new one: ")
             num = check_inlist(alist, num)
     return num
 
@@ -55,6 +62,7 @@ def check_amount(amount):
     while True:
         try:
             float(camount)
+            camount = float(check_negative(camount))
             return camount
         except ValueError:
             camount = input("Enter a valid amount: ")
